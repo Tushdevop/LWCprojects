@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,
+                            flexipage:availableForAllPageTypes"
+                access="global"
+                controller="ClinicalTrialDataController">
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+<!-- Header Attributes -->
+<aura:attribute name="Condition" type="String"/>
+<aura:attribute name="NcID" type="String"/>
+<aura:attribute name="Rank" type="Integer"/>
+<aura:attribute name="BriefTitle" type="String"/>
+
+<br/> Condition is : {!v.Condition}
+<br/> NcID is : {!v.NcID}
+<br/> Rank is :{!v.Rank}
+<br/> BriefTitle is :{!v.BriefTitle}
+
+</aura:component>	
