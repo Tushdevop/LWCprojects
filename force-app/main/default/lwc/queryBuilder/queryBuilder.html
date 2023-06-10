@@ -25,7 +25,7 @@
                             <div class="slds-col slds-size_3-of-12  slds-m-bottom_small">
                                 <span> From : </span>
                             </div>
-                            <div class="slds-col slds-size_9-of-12 slds-m-bottom_small">
+                            <div class="slds-col slds-size_9-of-12">
                                 <span>
                                     <select class="slds-select background" onchange={handleGetSelectedObjValue}>
                                         <option value="">choose one...</option>
@@ -104,7 +104,7 @@
                     </span>
                   </div>
 
-                  <div class="slds-col slds-size_5-of-12 background">
+                  <div class="slds-col slds-size_5-of-12 background slds-var-p-around_medium">
                     <span>
                         <div class="slds-box slds-box_small slds-var-p-around_medium">
                             SOQL QUERY - <br><br>
@@ -121,11 +121,11 @@
 
     
         <template lwc:if={retrievedQueryList}>
-            <template for:each={retrievedQueryList} for:item="data">
-                <ul key={data.id} class="slds-box slds-box_small">
-                    <li>{data.Name} &nbsp; {data.Rating}</li>
-                </ul>
-            </template>
+            <ul  class="slds-box slds-box_small">
+                <template for:each={retrievedQueryList} for:item="data">
+                    <li key={data.id}>{data.Name} &nbsp; {data.Rating}</li>    
+                </template>
+            </ul>
         </template>
     
         

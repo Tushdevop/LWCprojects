@@ -58,7 +58,7 @@ export default class QueryBuilder extends LightningElement {
     retrievedQueryList = [];
 
     handleQueryClick(){
-        alert('Query Fired');
+        //alert('Query Fired');
         getsObjectDataList()
         .then(result=>{
             this.retrievedQueryList = result;
