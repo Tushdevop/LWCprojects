@@ -1,2 +1,15 @@
-.THIS {
+.THIS.c-container {
+    border: 1px solid #0e45ac;
+    margin: 10px 0 20px;
+}
+
+.THIS .header-column {
+    padding: 0 2rem;
+}
+
+.THIS .field-title {
+    font-size: .75rem;
+    line-height: 1.25;
+    color: #54698d;
+    margin-bottom: .25rem;
 }

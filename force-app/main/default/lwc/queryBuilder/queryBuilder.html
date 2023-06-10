@@ -106,14 +106,15 @@
 
                   <div class="slds-col slds-size_5-of-12 background slds-var-p-around_medium">
                     <span>
-                        <div class="slds-box slds-box_small slds-var-p-around_medium">
-                            SOQL QUERY - <br><br>
-                         
-                            SELECT {allfieldValues}<br>
-                            FROM  {selectedObjName}<br>
-                            ORDER BY {orderParam}   {sortParam}  {nullParam} <br>
-                            LIMIT {limitParam}<br>
-                        </div>
+                        <!--Child Component-->
+                        <c-query-builder-showcase
+                                        allfield-values={allfieldValues}
+                                        selected-obj-name={selectedObjName}
+                                        order-param={orderParam}
+                                        sort-param={sortParam}
+                                        null-param={nullParam}
+                                        limit-param={limitParam}>
+                        </c-query-builder-showcase>
                     </span>
                   </div>
             </div>
@@ -127,7 +128,7 @@
                 </template>
             </ul>
         </template>
-    
+        
         
 
 

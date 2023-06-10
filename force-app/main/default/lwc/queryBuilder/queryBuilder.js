@@ -8,7 +8,8 @@ import getsObjectDataList from '@salesforce/apex/RetrieveQueryData.getsObjectDat
 export default class QueryBuilder extends LightningElement {
 
     objsList = [];
-    fieldsList = ['Id', 'Name', 'Rating'];
+    fieldsList = [];
+    optionList = [];
     selectedObjName = ''
     objselected = false;
     selectedFieldName = ''
@@ -16,6 +17,7 @@ export default class QueryBuilder extends LightningElement {
 
     connectedCallback(){
         this.getallobjectlist();
+        this.getAllFiledsList();
     }
 
     getallobjectlist(){
@@ -34,6 +36,20 @@ export default class QueryBuilder extends LightningElement {
         })   
     }
 
+   getAllFiledsList(){
+        
+        getAllfields({objectName: this.selectedObjName})
+        .then(result=>{
+            //alert('inside the field result');
+           // console.log(result);
+            this.fieldsList = result;
+        })
+        .catch(error=>{
+           // console.log(error);
+        })
+
+    }
+
     handleGetSelectedObjValue(event){
         this.selectedObjName = event.target.value;
         console.log('Selected object value is--'+selectedObjName);
@@ -41,18 +57,7 @@ export default class QueryBuilder extends LightningElement {
         console.log('ObjectSelected -True??--'+objselected);
     }
 
-    if(objselected){
-        console.log('ObjectSelected -True??--'+objselected);
-        // getAllfields({objectName: this.selectedObjName})
-        // .then(result=>{
-        //     alert('inside the field result');
-        //     console.log(result);
-        //     this.fieldsList = result;
-        // })
-        // .catch(error=>{
-        //    // console.log(error);
-        // })
-    }
+    
 
      
     retrievedQueryList = [];
@@ -101,7 +106,10 @@ export default class QueryBuilder extends LightningElement {
         { label: 'Id', value: 'Id' },
         { label: 'Name', value: 'Name' },
         { label: 'Rating', value: 'Rating' },
-  ];
+    ];
+
+    
+
  
   handlefieldChange(event)
   {

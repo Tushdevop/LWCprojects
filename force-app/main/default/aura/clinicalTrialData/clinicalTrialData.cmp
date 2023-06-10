@@ -11,7 +11,17 @@
 <aura:attribute name="Rank" type="Integer"/>
 <aura:attribute name="BriefTitle" type="String"/>
 
-<br/> Condition is : {!v.Condition}
+<div class="c-container">
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small">
+            <div class="header-column">
+                <p class="field-title" title="Condition is :">Condition</p>
+                <p>{!v.Condition}</p>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</div>
+<br/>  
 <br/> NcID is : {!v.NcID}
 <br/> Rank is :{!v.Rank}
 <br/> BriefTitle is :{!v.BriefTitle}
