@@ -1,11 +1,12 @@
 /*
-*
+*   
 *
 *
 */
 public with sharing class RetrieveQueryData {
 
-    @AuraEnabled
+    //Method to pull all Objects Names from Salesforce Org
+    @AuraEnabled(cacheable=true)
     public static Map<String, String> getAllObject(){
 
         Map<String,String> returnObjectMap = new Map<String,String>();
@@ -32,33 +33,53 @@ public with sharing class RetrieveQueryData {
         }
     }
 
-    @AuraEnabled 
-    public static List<String> getAllfields(){
+    //Method to get all fileds from Selected Object     
+    @AuraEnabled(cacheable=true)
+    public static Map<String, String> getAllfields(String objName){
 
-        List<String> allFields = new List<String>();
+        //String objName = 'Account';
+        Map<String, String> allFieldsMap = new Map<String, String>();
 
         Map<String, Schema.SObjectType> objectMap = Schema.getGlobalDescribe();
-        SObjectType objType = objectMap.get('Account');
+        SObjectType objType = objectMap.get(objName);
 
         // Map of fields with api name and Api name as value
         Map<String,Schema.SObjectField> objTypeFields = objType.getDescribe().fields.getMap();
         if(!objTypeFields.isEmpty()){
                 for (String fieldName: objTypeFields.keySet()) {
-                        //getting labels of the fields
+                        //getting api and labels of the fields
+                        String fieldAPIName = fieldName;
                         String fieldLabel = objTypeFields.get(fieldName).getDescribe().getLabel();
-                        allFields.add(fieldLabel);
+                        allFieldsMap.put(fieldLabel, fieldAPIName);
                         }
                 }
-        //System.debug(allFields);
-        return allFields;
+        //System.debug(allFieldsMap);
+                if(allFieldsMap != null && allFieldsMap.size() > 0){
+                        return allFieldsMap;
+                }else{
+                        return null;
+                }
         }
 
 
+        @AuraEnabled(cacheable=true)
+        public static List<sObject> getsObjectDataList(String queryString){
+              //  String queryString='SELECT Id, Name FROM Account LIMIT 5';
+                List<sObject> sobjList = Database.query(QueryString);
+                return sobjList;
+        }
+
         @AuraEnabled
-        public static List<Account> getsObjectDataList(){
-                return [ SELECT Id, Name, Rating
-                          FROM Account
-                          ORDER BY Name DESC NULLS LAST        
-                          LIMIT 5];
+        public static void saveQueryString(String queryString){
+                SavedQuery__c query=new SavedQuery__c();
+                query.Query_String__c = queryString;
+
+                insert query;
+        }
+
+        @AuraEnabled(cacheable=true)
+        public static List<SavedQuery__c> getAllSavedQueries(){
+                return [ SELECT Query_String__c
+                        FROM SavedQuery__c];
         }
 }   

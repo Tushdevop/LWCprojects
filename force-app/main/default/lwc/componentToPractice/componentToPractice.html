@@ -1,0 +1,136 @@
+<template>
+    <div class="container background">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_10-of-12">
+                <span>
+                    <div class="header slds-m-around_small">SOQL Query Builder</div>  
+                </span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_large">
+                <span>
+                    <lightning-button variant="brand" label="Run Query" onclick={handleQueryClick}></lightning-button>
+                </span>
+            </div>
+         </div>
+
+
+        <div class="slds-var-p-around_small">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_7-of-12" >
+                    <span>
+                        <div class="slds-grid slds-wrap">
+                            
+                           
+                            <div class="slds-col slds-size_3-of-12  slds-m-bottom_small">
+                                <span> From : </span>
+                            </div>
+                            <div class="slds-col slds-size_9-of-12">
+                                <span>
+                                    <select class="slds-select background" onchange={handleGetSelectedObjValue}>
+                                        <option value="">choose one...</option>
+                                        <template for:each = {objsList} for:item="objName">
+                                            <option key={objName.key} value={objName.value}>{objName.value}</option>
+                                        </template>
+                                    </select>
+                                </span>
+                            </div>
+                            
+
+                            
+                            <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                <span> Fields : </span>
+                            </div>
+                            <div class="slds-col slds-size_9-of-12 slds-m-bottom_small">
+                                <span>
+                                    <lightning-combobox name="fields" value={value} 
+                                                        options={options} onchange={handlefieldChange}></lightning-combobox>
+                                    <template for:each={allfieldValues} for:item="val">
+                                        <lightning-pill key={val} name={val} label={val} onremove={handleRemove}></lightning-pill>
+                                    </template>
+                                </span>
+                            </div>
+                            
+
+                            <!--Field ORDER BY-->
+                            
+                                <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                    <span> Order By : </span>
+                                </div>
+                                <div class="slds-col slds-size_9-of-12 slds-m-bottom_small">
+                                    <span>
+                                        <select class="slds-select background" onchange={handleOrderChange}>
+                                            <template for:each = {allfieldValues} for:item="fieldName">
+                                                <option key={fieldName} value={fieldName}>{fieldName}</option>
+                                            </template>
+                                        </select>
+                                    </span>
+                                </div>
+
+
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small"></div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                            <span> <select class="slds-select background" onchange={handleSortChange}>
+                                                        <option value="ASC">Ascending</option>
+                                                        <option value="DESC">Descending</option>
+                                                   </select> 
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                            <span> <select class="slds-select background" onchange={handleNullChange}>
+                                                        <option value="NULLS FIRST">NULLS FIRST</option>
+                                                        <option value="NULLS LAST">NULLS LAST</option>
+                                                   </select> 
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                            <span>
+                                                <lightning-button variant="brand" label="Add" onclick={handleClick}></lightning-button>
+                                            </span>
+                                        </div>
+                                
+                                <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                            <span> Limit : </span>
+                                        </div>
+                                <div class="slds-col slds-size_9-of-12 slds-m-bottom_small">
+                                    <span> <select class="slds-select background" onchange={handleLimitChange}>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                   </select> 
+                            </span>
+                                </div>
+                       
+                        </div>
+                    </span>
+                  </div>
+
+                  <div class="slds-col slds-size_5-of-12 background slds-var-p-around_medium">
+                    <span>
+                        <!--Child Component-->
+                        <c-query-builder-showcase
+                                        allfield-values={allfieldValues}
+                                        selected-obj-name={selectedObjName}
+                                        order-param={orderParam}
+                                        sort-param={sortParam}
+                                        null-param={nullParam}
+                                        limit-param={limitParam}>
+                        </c-query-builder-showcase>
+                    </span>
+                  </div>
+            </div>
+        </div>
+
+    
+        <template lwc:if={retrievedQueryList}>
+            <ul  class="slds-box slds-box_small">
+                <template for:each={retrievedQueryList} for:item="data">
+                    <li key={data.id}>{data.Name} &nbsp; {data.Rating}</li>    
+                </template>
+            </ul>
+        </template>
+    </div> <!--Container Div end-->
+
+    <div>
+        <c-query-builder-data-table query-string={queryString} show-table="true">
+        </c-query-builder-data-table>
+    </div>
+</template>

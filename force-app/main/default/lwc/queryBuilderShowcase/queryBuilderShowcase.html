@@ -2,9 +2,22 @@
     <div class="slds-box slds-box_small slds-var-p-around_medium">
         SOQL QUERY - <br><br>
      
-        SELECT {allfieldValues}<br>
+        SELECT {selectedFieldValues}<br>
         FROM  {selectedObjName}<br>
-        ORDER BY {orderParam}   {sortParam}  {nullParam} <br>
-        LIMIT {limitParam}<br>
+        LIMIT {limit}<br>
+    </div>
+    <div class="slds-var-p-around_medium">
+        <lightning-button variant="brand" label="Save Query" onclick={handleSaveClick}></lightning-button>
+    </div>
+
+    <div class="slds-box slds-box_small slds-var-p-around_medium">
+       <ul>
+        <template for:each={savedQueryList} for:item="query">
+            <li key={query.id}>
+                <!--<a href="">{query.Query_String__c}</a>-->
+                <lightning-button variant="base" label={query.Query_String__c} title="Looks like a link" onclick={handleQueryClick} class="slds-m-left_x-small"></lightning-button>
+            </li>
+        </template>
+        </ul>
     </div>
 </template>

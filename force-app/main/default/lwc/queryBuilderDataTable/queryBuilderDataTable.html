@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title="Data Table" icon-name="custom:custom23">
+            <ul class="slds-box slds-box_small">
+            <template for:each={queryData} for:item="data">
+                <li key={data.Id}>{data.Name}</li>
+            </template>
+            </ul>
+    </lightning-card>
+</template>
