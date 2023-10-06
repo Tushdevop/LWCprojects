@@ -1,5 +1,5 @@
 /*
-*
+* Parser class
 */
 public with sharing class ClinicalDataController {
     
